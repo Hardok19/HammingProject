@@ -13,55 +13,45 @@ using namespace std;
 using namespace __bitset;
 
 
+#include <iostream>
+#include <vector>
 
+using namespace std;
 
+vector<bool> stringToVectorBool(const string& str) {
+    vector<bool> vec(str.size());
+    for (size_t i = 0; i < str.size(); ++i) {
+        vec[i] = (str[i] == '1');
+    }
+    return vec;
+}
+
+string vectorBoolToString(const vector<bool>& vec) {
+    string str(vec.size(), '0');
+    for (size_t i = 0; i < vec.size(); ++i) {
+        if (vec[i]) {
+            str[i] = '1';
+        }
+    }
+    return str;
+}
 
 int main() {
-    list<string> texto = intputfile();
-    vector<string> texto2 = strToBinary(texto.back());
 
-    int even  = generateParityBitREAL(texto.front(), true);
-    int odd  = generateParityBitREAL(texto.front(), false);
+    // Cadena de datos de prueba
+    string datos = "0110";
+    // Convertimos la cadena de datos a vector<bool>
+    vector<bool> datosVec = stringToVectorBool(datos);
 
+    // Generamos el código de Hamming
+    vector<bool> hammingCodeVec = generateHammingCode(datosVec);
 
-    cout << "Even Parity Bit: " << even << endl;
-    cout << "Odd Parity Bit: " << odd << endl;
+    // Convertimos el resultado de vector<bool> a string para visualizar
+    string hammingCode = vectorBoolToString(hammingCodeVec);
 
-
-    outputfile(texto.back());
-
-    cout << Pfinder(4) << endl;
-    vector<int> A = parityposition(Pfinder(4));
-
-    for (int i = 0; i < A.size(); i++) {
-        cout << A[i] << endl;
-    }
-
-
-    string datos = "10101010011101010101011010101010101111110111";
-    int datosize  = texto2.back().size();
-    std::vector<bool> bits(datosize);
-    vector<string> a = {" "};
-
-    // Llenar el vector con los bits de datos
-    for (int i = 0; i < datosize; ++i) {
-        bits[i] = (texto2.back()[i] == '1');
-    }
-
-    // Imprimir el vector de bits
-    for (bool bit : bits) {std::cout << bit;}
-    std::cout << std::endl;
-
-    //main1();
-
-    vector<int> b = parityposition(Pfinder(4));
-
-
-    cout << setparity(b, "0110", Pfinder(4)) << std::endl;
-    calculatorsparity(b, Pfinder(4));
-
-
-
+    // Imprimimos el resultado
+    cout << "Datos originales: " << datos << endl;
+    cout << "Código Hamming:   " << hammingCode << endl;
 
 
     return 0;
