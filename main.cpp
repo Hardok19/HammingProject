@@ -1,10 +1,10 @@
 #include <bitset>
 #include <fstream>
 #include <iostream>
-#include <sstream>
 #include <string>
-#include "pruebas.h"
-#include "hamming.h"
+#include "encoder/hamming.h"
+#include <vector>
+#include "decoder/hammingdecoder.h"
 
 
 
@@ -13,8 +13,7 @@ using namespace std;
 using namespace __bitset;
 
 
-#include <iostream>
-#include <vector>
+
 
 using namespace std;
 
@@ -36,24 +35,35 @@ string vectorBoolToString(const vector<bool>& vec) {
     return str;
 }
 
+
 int main() {
+    // Datos de prueba
+    vector<bool> datos = stringToVectorBool("10110101");  // Mensaje de datos original
 
-    // Cadena de datos de prueba
-    string datos = "0110";
-    // Convertimos la cadena de datos a vector<bool>
-    vector<bool> datosVec = stringToVectorBool(datos);
-
-    // Generamos el código de Hamming
-    vector<bool> hammingCodeVec = generateHammingCode(datosVec);
-
-    // Convertimos el resultado de vector<bool> a string para visualizar
-    string hammingCode = vectorBoolToString(hammingCodeVec);
-
-    // Imprimimos el resultado
-    cout << "Datos originales: " << datos << endl;
-    cout << "Código Hamming:   " << hammingCode << endl;
+    // Instanciar la clase Hamming
+    Hamming hamming;
 
 
+
+
+    vector<bool> ham = hamming.generateHammingCode(datos);
+    hamming.printHammingCode(ham);
+
+    // Introducir un error para pruebas (por ejemplo, invertir el primer bit)
+    vector<bool> datosConError = stringToVectorBool("001101100111");
+
+    HammingDecoder decoder;
+
+    bool evenParity = true; // Paridad par
+
+    // Arreglar y decodificar
+    vector<bool> resultado = decoder.fixAndDecode(datosConError, evenParity);
+
+    cout << "Datos decodificados: ";
+    for (bool bit : resultado) {
+        cout << bit;
+    }
+    cout << endl;
     return 0;
 }
 
