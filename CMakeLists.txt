@@ -6,5 +6,8 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(P3DATOS2 main.cpp
         pruebas.h
-        hamming.h)
+        encoder/hamming.h
+        decoder/hammingdecoder.h
+        encoder/hamming.cpp
+        decoder/hammingdecoder.cpp)
 
